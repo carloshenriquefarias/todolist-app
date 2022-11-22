@@ -11,16 +11,23 @@ export function Home() {
     const [activitiesName, setActivitiesName] = useState('');
 
     const [ActivitiesCount, setActivitiesCount] = useState(0);
-    // const [CountActivitiesFinished, setCountActivitiesFinished] = useState(0);
 
-    // useEffect(() => {
-    //     setActivitiesCount(activities.length);
+
+    const [CountActivitiesFinished, setCountActivitiesFinished] = useState(0);
+
+
+
+
+    useEffect(() => {
+        setActivitiesCount(activities.length);
     
-    //     var activitiesFinished = activities.filter(item => {
-    //        return  item.isComplete == true               
-    //     })
-    //     setCountActivitiesFinished(activitiesFinished.length);
-    // }, [activities]);
+        var activitiesFinished = activities.filter(item => {
+           return  item.isComplete == true               
+        })
+        setCountActivitiesFinished(activitiesFinished.length);
+    }, [activities]);
+
+    
 
 
     function handleActivitiesAdd(){
@@ -35,11 +42,16 @@ export function Home() {
             return Alert.alert("Atenção", "Esta atividade já existe!");
         }
 
-        // const newActivities = {
-        //     id: activities.length + 1,
-        //     name: activitiesName,    
-        //     isComplete: false
-        // }
+
+
+        const newActivities = {
+            id: activities.length + 1,
+            name: activitiesName,    
+            isComplete: false
+        }
+
+
+
 
         setActivities(prevState => [...prevState, activitiesName]);
         setActivitiesName('');

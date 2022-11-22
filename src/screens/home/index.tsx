@@ -1,19 +1,45 @@
 import {Text, View, TextInput, TouchableOpacity, ScrollView, FlatList, Alert} from 'react-native';
-import { Activities } from '../../componentes/Activities';
+import { ActivitiesList } from '../../componentes/Activities';
 import {styles} from './styles';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 export function Home() {
 
-    const [activities, setActivities] = useState<string[]>([]);
+    const [activities, setActivities] = useState<string[]>([
+        "Nome 1","Nome 2"
+    ]);
     const [activitiesName, setActivitiesName] = useState('');
 
+    const [ActivitiesCount, setActivitiesCount] = useState(0);
+    // const [CountActivitiesFinished, setCountActivitiesFinished] = useState(0);
+
+    // useEffect(() => {
+    //     setActivitiesCount(activities.length);
+    
+    //     var activitiesFinished = activities.filter(item => {
+    //        return  item.isComplete == true               
+    //     })
+    //     setCountActivitiesFinished(activitiesFinished.length);
+    // }, [activities]);
+
+
     function handleActivitiesAdd(){
+
+        if (activitiesName == '') {
+            Alert.alert('Informe a sua atividade');
+            return;
+        }
 
         //Verificando se existe uma atividade na lista
         if(activities.includes(activitiesName)){
             return Alert.alert("Atenção", "Esta atividade já existe!");
         }
+
+        // const newActivities = {
+        //     id: activities.length + 1,
+        //     name: activitiesName,    
+        //     isComplete: false
+        // }
 
         setActivities(prevState => [...prevState, activitiesName]);
         setActivitiesName('');
@@ -36,6 +62,8 @@ export function Home() {
             },
         ])
     }
+
+    
 
     return (
         <View style={styles.container}>
@@ -82,13 +110,15 @@ export function Home() {
             </Text>  
 
             <FlatList
+                style={{ width: "90%"}}
                 data={activities}
                 keyExtractor={item => item}
                 renderItem={({item}) => (
-                    <Activities 
+                    <ActivitiesList 
                         key={item}
                         name={item}  
                         onRemove={ () =>handleActivitiesRemove(item)}
+                        // isComplete= true
                     />
                 )}
                 showsVerticalScrollIndicator={false}
